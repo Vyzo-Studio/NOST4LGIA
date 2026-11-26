@@ -11,11 +11,17 @@ A página inicial está em index.html. A disponibilidade da última publicação
 ## Estado atual
 
 Projeto Supabase autorizado: Nost4lgia (msliegnljwggfjrgxmdh).
-Banco inicial com 21 tabelas protegidas por RLS e três migrações versionadas. A interface inicial utiliza login por e-mail e senha, permissões reais e operações RPC do banco, sem dados demonstrativos.
+21 tabelas protegidas por RLS e seis migrações versionadas. Interface Command Center 2.0 com arquivos HTML, CSS e JavaScript independentes.
 
-Disponível para validação: catálogo e cadastro de produtos, movimentação de estoque, cadastro de categorias, mesas e caixas, abertura de mesas e caixas, consulta de pedidos, clientes e auditoria.
+Disponível para validação: login e permissões, produtos e edição, embalagens, estoque, mesas e comandas, PDV de balcão/retirada, reservas, baixa na entrega, taxa opcional de mesa, registro de pagamentos, troco, abertura e fechamento de caixa, cadastro de clientes e consulta de auditoria.
 
-Ainda não liberado para uso comercial: criação e confirmação de pedidos, baixa automática por venda, pagamentos, fechamento de caixa, cadastro de clientes pela interface, autorização por senha administrativa, recuperação de senha e gerenciamento de funcionários. A integração e os testes autenticados ainda precisam ser realizados. O logotipo original ainda precisa ser incorporado.
+O teste SQL integrado com identidades temporárias foi aprovado; dados de teste revertidos. A sintaxe do frontend foi verificada, mas testes reais no navegador e publicação ainda não estão confirmados. Nenhum usuário administrativo foi criado. Não usar para vendas reais antes de homologação.
+
+Delivery está bloqueado até implementação de regras de elegibilidade e endereço. Aprovações administrativas, estornos, relatórios completos e outros módulos continuam pendentes.
+
+- [Checklist mestre atualizado](docs/checklist.md)
+- [Benchmark visual Consumer](docs/benchmark-consumer.md)
+- [Teste SQL de integração](test/sql/sales_smoke.sql)
 
 ## Primeiro administrador
 
@@ -33,7 +39,7 @@ A conta inicial não foi criada automaticamente. Não há credenciais padrão.
 
 ## Testes
 
-Execute `node --test` para as regras financeiras independentes. Consulte GitHub Actions para o resultado real. A execução de testes de integração e a validação da página publicada continuam pendentes.
+Execute `node --test` para as regras financeiras independentes. Consulte GitHub Actions para o resultado real. O teste SQL de integração foi executado com sucesso no banco vazio. Os testes autenticados no navegador, a execução da CI e a validação da página publicada continuam pendentes.
 
 ## Segurança
 
