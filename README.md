@@ -2,39 +2,42 @@
 
 Desenvolvido por VYZO STUDIO.
 
-## Estado inicial
+## Acesso
 
-Em 25/11/2026 o repositório foi verificado vazio (sem branches ou commits) e a conexão Supabase denominada Nost4lgia retornou zero projetos acessíveis. O esqueleto mencionado no briefing não estava disponível no repositório. Nenhum banco alternativo foi criado ou selecionado.
+https://vyzo-studio.github.io/NOST4LGIA/
 
-Este repositório começa como uma fundação de desenvolvimento, não como um ERP operacional. Não contém catálogo público, dados de clientes, credenciais ou confirmação fictícia de pagamentos.
+A página inicial está em index.html. A disponibilidade da última publicação deve ser confirmada no GitHub Pages.
 
-## Escopo
+## Estado atual
 
-Aplicação privada para administração e funcionários: mesas, comandas, balcão, estoque, clientes, caixa, pedidos, financeiro e auditoria. A taxa sugerida de 10% é opcional e exclusiva de mesas. O estoque e os valores definitivos deverão ser validados no servidor com transações e controle de permissões.
+Projeto Supabase autorizado: Nost4lgia (msliegnljwggfjrgxmdh).
+Banco inicial com 21 tabelas protegidas por RLS e três migrações versionadas. A interface inicial utiliza login por e-mail e senha, permissões reais e operações RPC do banco, sem dados demonstrativos.
 
-## Bloqueios
+Disponível para validação: catálogo e cadastro de produtos, movimentação de estoque, cadastro de categorias, mesas e caixas, abertura de mesas e caixas, consulta de pedidos, clientes e auditoria.
 
-- Conceder acesso ao projeto Supabase existente Nost4lgia e confirmar seu project reference.
-- Disponibilizar o esqueleto original do site, se houver trabalho fora deste repositório.
-- Incorporar o arquivo oficial da marca sem redesenho.
-- Auditar schema, Auth, RLS, permissões, migrations e configuração de implantação antes de alterações no banco.
+Ainda não liberado para uso comercial: criação e confirmação de pedidos, baixa automática por venda, pagamentos, fechamento de caixa, cadastro de clientes pela interface, autorização por senha administrativa, recuperação de senha e gerenciamento de funcionários. A integração e os testes autenticados ainda precisam ser realizados. O logotipo original ainda precisa ser incorporado.
 
-Não executar migrações em outro projeto. Não publicar o ERP como operacional sem testes de integração e autorização.
+## Primeiro administrador
 
-## Referências funcionais
+Crie uma conta individual no painel Supabase em Authentication > Users e confirme o e-mail de acordo com a configuração da conta. O administrador do projeto deve vincular o UUID dessa conta ao perfil administrativo pelo SQL Editor. Não permita autoatribuição de funções administrativas pelo navegador.
 
-- https://consumer.com.br/recursos
-- https://ajuda.programaconsumer.com.br/como-fazer-a-abertura-e-o-fechamento-do-caixa-gaveta/
-- https://ajuda.programaconsumer.com.br/como-fazer-a-divisao-da-conta-entre-varios-clientes-na-mesa/
-- https://supabase.com/docs/guides/database/postgres/row-level-security
-- https://supabase.com/changelog.md
+Exemplo (substitua o UUID e o nome pelo usuário autorizado; não inclua senhas):
+```sql
+insert into public.profiles (id,full_name,role_id,active)
+select id, 'Nome do administrador', (select id from public.roles where code='admin'), true
+from auth.users
+where id = '00000000-0000-0000-0000-000000000000'::uuid;
+```
 
-O Consumer é referência de fluxo, não de código ou identidade visual.
+A conta inicial não foi criada automaticamente. Não há credenciais padrão.
 
-## Desenvolvimento
+## Testes
 
-A fundação independente do banco utiliza módulos JavaScript ES e testes com Node.js, sem dependências externas. Os cálculos locais não constituem autorização de pagamento ou persistência.
+Execute `node --test` para as regras financeiras independentes. Consulte GitHub Actions para o resultado real. A execução de testes de integração e a validação da página publicada continuam pendentes.
 
-Execute `node --test` após a inclusão dos testes. O servidor e a interface ainda precisam ser integrados ao projeto autorizado.
+## Segurança
 
-Site pretendido (não publicado/verificado): https://vyzo-studio.github.io/NOST4LGIA/
+Não publique chaves privilegiadas, senhas, registros de clientes ou backups. O frontend utiliza somente a chave publicável do projeto. Não altere os dados diretamente para contornar o controle de permissões.
+
+Referência funcional: https://consumer.com.br/recursos
+Documentação Supabase: https://supabase.com/docs/guides/database/postgres/row-level-security
